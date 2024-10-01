@@ -1,8 +1,24 @@
+require:
+  - rubocop-factory_bot
+  - rubocop-capybara
+
+# Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
+
 AllCops:
   TargetRubyVersion: 3.0
-
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
-Style/StringLiteralsInInterpolation:
-  EnforcedStyle: double_quotes
+  NewCops: enable
+  Exclude:
+    - tmp/**/*
+    - bin/**/*
+    - vendor/**/*
+    - public/**/*
+    - coverage/**/*
+    - docs/**/*
+    - db/schema*.*

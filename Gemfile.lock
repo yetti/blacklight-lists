@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    blacklight_lists (0.0.0)
+    blacklight_lists (1.0.0)
       blacklight (>= 8, < 9)
       rails (>= 7, < 8)
 

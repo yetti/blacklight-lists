@@ -1,0 +1,55 @@
+name: Ruby
+
+on:
+  push:
+    branches:
+      - main
+
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
+    name: Ruby ${{ matrix.ruby }} / Rails ${{ matrix.rails_version }} / Blacklight ${{ matrix.blacklight_version }} ${{ matrix.additional_name }}
+    strategy:
+      matrix:
+        ruby:
+          - 3.3
+        rails_versions:
+          - 7.2
+        blacklight_versions:
+          - ~> 8.0
+        experimental: [false]
+        additional_engine_cart_rails_options: [ "" ]
+        additional_name: [ "" ]
+        view_component_version:
+          - ~> 3.9
+        include:
+          - ruby: "3.3"
+            rails_version: "7.2.1"
+            blacklight_version: "~> 8.0"
+            experimental: false
+            additional_name: Blacklight 8
+          - ruby: "3.2"
+            rails_version: "7.2.1"
+            blacklight_version: "github"
+            experimental: true
+            additional_engine_cart_rails_options: -a propshaft
+            additional_name: "/ Propshaft"
+
+    env:
+      RAILS_VERSION: ${{ matrix.rails_version }}
+      BLACKLIGHT_VERSION: ${{ matrix.blacklight_version }}
+      VIEW_COMPONENT_VERSION: ${{ matrix.view_component_version }}
+      ENGINE_CART_RAILS_OPTIONS: "--skip-git --skip-listen --skip-spring --skip-keeps --skip-action-cable --skip-coffee --skip-test ${{ matrix.additional_engine_cart_rails_options }}"
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - name: Run the default task
+      run: bundle exec rake

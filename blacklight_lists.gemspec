@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'rails', '>= 7', '< 8'
+  spec.add_dependency 'rails', '>= 7', '< 9'
   spec.add_dependency 'blacklight', '>= 8', '< 9'
 
   spec.add_development_dependency 'capybara'
